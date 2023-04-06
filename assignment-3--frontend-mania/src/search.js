@@ -43,13 +43,6 @@ function Search({ selectedTypes, setSelectedTypes}) {
         PAGE_SIZE={PAGE_SIZE}
         setPage={setPage}
       />
-      <Pagination 
-       page={page}
-       setPage={setPage}
-       PAGE_SIZE={PAGE_SIZE}
-       selectedTypes={selectedTypes}
-       pokemons={pokemons}
-      />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import Dashbord from "./dashbord";
 import Search from "./search";
+import "./login.css";
 
 function Login() {
   const [username, setUsername] = useState("");

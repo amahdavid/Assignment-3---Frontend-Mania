@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import Pagination from "./Pagination";
 
 function Result({ selectedTypes, page, PAGE_SIZE, setPage }) {
   const [pokemons, setPokemon] = useState([]);
-  const [displayedPokemons, setDisplayedPokemons] = useState([]);
   const startIndex = (page - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
 
@@ -27,20 +27,24 @@ function Result({ selectedTypes, page, PAGE_SIZE, setPage }) {
     fetchData();
   }, []);
 
-  useEffect(() => {
+  // filter the pokemons based on the selected types
+  const filteredPokemons = useMemo(() => {
     if (selectedTypes.length === 0) {
-      setDisplayedPokemons([]);
-      return;
+      return [];
     }
-
-    const filteredPokemons = pokemons.filter((pokemon) =>
+    return pokemons.filter((pokemon) =>
       selectedTypes.every((type) => pokemon.type.includes(type))
     );
+  }, [selectedTypes, pokemons]);
 
-    const displayedPokemons = filteredPokemons.slice(startIndex, endIndex);
+  // get the firstpage of the filtered pokemons
+  const displayedPokemons = useMemo(() => {
+    return filteredPokemons.slice(startIndex, endIndex);
+  }, [filteredPokemons, startIndex, endIndex]);
 
-    setDisplayedPokemons(displayedPokemons);
-  }, [selectedTypes, pokemons, startIndex, endIndex]);
+  if (selectedTypes.length === 0) {
+    return null;
+  }
 
   return (
     <div>
@@ -55,7 +59,14 @@ function Result({ selectedTypes, page, PAGE_SIZE, setPage }) {
           />
         </div>
       ))}
-      {displayedPokemons.length === 0 && <p>Select a type to see the Pokemons!!</p>}
+      <Pagination 
+       page={page}
+       setPage={setPage}
+       PAGE_SIZE={PAGE_SIZE}
+       selectedTypes={selectedTypes}
+       pokemons={pokemons}
+      />
+
     </div>
   );
 }
