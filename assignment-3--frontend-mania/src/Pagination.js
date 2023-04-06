@@ -37,7 +37,7 @@ function Pagination({ page, setPage, PAGE_SIZE, selectedTypes, pokemons }) {
         <button
           key={pageNumber}
           onClick={() => changePage(pageNumber)}
-          className={`pagination-item ${page === pageNumber ? "active" : null}`}
+          className={`pagination-item ${page === pageNumber ? "buttonActive" : ""}`}
         >
           {pageNumber}
         </button>
