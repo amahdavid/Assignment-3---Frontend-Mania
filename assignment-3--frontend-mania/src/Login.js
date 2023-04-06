@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import Dashbord from "./dashbord";
+import Search from "./search";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -9,6 +10,7 @@ function Login() {
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
   const [user, setUser ] = useState("");
+  const [selectedTypes, setSelectedTypes] = useState([]);
 
   const onClickHandle = async (e) => {
     e.preventDefault();
@@ -23,11 +25,16 @@ function Login() {
 
   return (
     <div>
-      {(accessToken && user?.role == "admin") && <Dashbord 
+      {(accessToken && user?.role === "admin") && <Dashbord 
         accessToken={accessToken}
         setAccessToken={setAccessToken}
         refreshToken={refreshToken}
     
+      />}
+
+      {(accessToken && user?.role === "user") && <Search
+        selectedTypes={selectedTypes}
+        setSelectedTypes={setSelectedTypes}
       />}
       {!accessToken && (
         <form onSubmit={onClickHandle}>
