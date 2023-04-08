@@ -8,20 +8,60 @@ import {
 } from "react-router-dom";
 
 function Dashbord({accessToken, setAccessToken, refreshToken}) {
+    const [linkClicked, setLinkClicked] = React.useState(false);
+
+    const handleClick = () => {
+        setLinkClicked(true);
+    }
+
     return (
    <div>
-    Dashboard
+    <h1>Welcome to Admin Dashboard</h1>
 
     <ul>
-        <li><Link to = "/report/1">Report 1</Link></li>
-        <li><Link to = "/report/2">Report 2</Link></li>
-        <li><Link to = "/report/3">Report 3</Link></li>
+        <li><Link to = "/uniqueUsersOverTime" onClick={handleClick}>Report 1 - Unique API users over a period of time</Link></li>
+        <li><Link to = "/topApiUsersOverTime" onClick={handleClick}>Report 2 - Top API users over period of time</Link></li>
+        <li><Link to = "/topUsersForEachEndpoint" onClick={handleClick}>Report 3 - Top users for each Endpoint</Link></li>
+        <li><Link to = "/errorsByEndpoint" onClick={handleClick}>Report 4 - 4xx Errors By Endpoint</Link></li>
+        <li><Link to = "/recentErrors" onClick={handleClick}>Report 5 - Recent 4xx/5xx Errors</Link></li>
     </ul>
 
     <Routes>
-        <Route path="/report/1" element={<Report id={1} accessToken={accessToken} setAccessToken={setAccessToken} refreshToken={refreshToken} />} />
-        <Route path="/report/2" element={<Report id={2} accessToken={accessToken} setAccessToken={setAccessToken} refreshToken={refreshToken} />} />
-        <Route path="/report/3" element={<Report id={3} accessToken={accessToken} setAccessToken={setAccessToken} refreshToken={refreshToken} />} />
+        <Route path="/uniqueUsersOverTime" element={<Report 
+        id={1} 
+        accessToken={accessToken} 
+        setAccessToken={setAccessToken} 
+        refreshToken={refreshToken} 
+        linkClicked={linkClicked}
+        />} />
+        <Route path="/topApiUsersOverTime" element={<Report 
+        id={2} 
+        accessToken={accessToken} 
+        setAccessToken={setAccessToken} 
+        refreshToken={refreshToken}
+        linkClicked={linkClicked}
+        />} />
+        <Route path="/topUsersForEachEndpoint" element={<Report 
+        id={3} 
+        accessToken={accessToken} 
+        setAccessToken={setAccessToken} 
+        refreshToken={refreshToken} 
+        linkClicked={linkClicked}
+        />} />
+        <Route path="/errorsByEndpoint" element={<Report
+        id={4}
+        accessToken={accessToken}
+        setAccessToken={setAccessToken}
+        refreshToken={refreshToken}
+        linkClicked={linkClicked}
+        />} />
+        <Route path="/recentErrors" element={<Report
+        id={5}
+        accessToken={accessToken}
+        setAccessToken={setAccessToken}
+        refreshToken={refreshToken}
+        linkClicked={linkClicked}
+        />} />
     </Routes>
 
    </div>
